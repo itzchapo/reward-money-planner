@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>Reward Money Planner</title>
+<style>
+:root{color-scheme:dark;--bg:#101827;--card:#1b2738;--muted:#a9b6c9;--text:#f5f7fb;--accent:#7ee0b2;--line:#344257;--blue:#8db8ff;--gold:#ffd27e}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#101827,#172337);color:var(--text);font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:18px 13px 42px}
+main{max-width:720px;margin:auto}h1{font-size:29px;line-height:1.12;margin:4px 0 8px}h2{font-size:19px;margin:0 0 12px}h3{font-size:16px;margin:0 0 6px}p{line-height:1.45;color:var(--muted);margin:7px 0}.sub{margin-top:0}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:17px;margin:14px 0}.eyebrow{color:var(--accent);font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}.label{display:block;font-weight:650;margin:13px 0 7px}input,select{width:100%;border:1px solid #52627a;background:#101827;color:var(--text);border-radius:11px;padding:12px;font-size:16px;min-height:46px}input:focus,select:focus,button:focus{outline:2px solid var(--accent);outline-offset:2px}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.big{font-size:31px;font-weight:850;color:var(--accent);margin:4px 0}.small{font-size:13px;color:var(--muted)}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:#101827;border-radius:12px;padding:13px;min-width:0}.stat strong{display:block;font-size:21px;margin-top:5px;overflow-wrap:anywhere}.button{border:0;border-radius:12px;background:var(--accent);color:#10231d;font-weight:850;padding:14px 16px;width:100%;font-size:16px;margin-top:15px;cursor:pointer}.secondary{background:#26364c;color:var(--text);border:1px solid #52627a}.pill{border:1px solid var(--line);border-radius:999px;padding:7px 10px;display:inline-block;font-size:12px;color:var(--muted)}.result{border-left:3px solid var(--accent);padding-left:12px;margin:14px 0}.warning{border-left-color:var(--gold)}.note{font-size:13px;color:var(--muted)}.bar{height:10px;background:#101827;border-radius:99px;overflow:hidden;display:flex;margin:12px 0}.bar span{height:100%;display:block}.bar .invested{background:var(--accent)}.bar .kept{background:var(--blue)}.bar .fees{background:var(--gold)}.hidden{display:none!important}ul{padding-left:21px;line-height:1.5;color:var(--muted)}li{margin:7px 0}.divider{height:1px;background:var(--line);margin:15px 0}.choice{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:11px;margin:8px 0}.choice input{width:18px;min-height:18px;margin-top:3px;accent-color:var(--accent)}.choice span{line-height:1.35}.scenario{background:#101827;border-radius:12px;padding:13px;margin-top:10px}.scenario strong{font-size:20px}.tagline{display:flex;justify-content:space-between;gap:8px;align-items:center}.footer{font-size:12px;color:var(--muted);line-height:1.5;margin-top:20px}button:active{transform:scale(.99)}@media(max-width:440px){.row{grid-template-columns:1fr 1fr}.three{grid-template-columns:1fr}.big{font-size:29px}.stat strong{font-size:19px}}
+</style>
+</head>
+<body>
+<main>
+<header>
+ <div class="eyebrow">Your personal money dashboard</div>
+ <h1>Reward Money Planner</h1>
+ <p class="sub">Track reward-app earnings, choose when to withdraw, and build a realistic plan for your money.</p>
+</header>
+
+<section class="card">
+ <h2>1. Your earnings</h2>
+ <p>Enter what you actually earn. The estimates update when you change your answers.</p>
+ <div class="row">
+  <div><label class="label" for="nightly">Average earnings ($)</label><input id="nightly" type="number" min="0" max="1000000" step="0.01" value="7.50" inputmode="decimal"></div>
+  <div><label class="label" for="frequency">I earn this amount</label><select id="frequency"><option value="night">Per night</option><option value="week">Per week</option><option value="month">Per month</option></select></div>
+ </div>
+ <div class="row">
+  <div><label class="label" for="activeDays">Earning nights per week</label><select id="activeDays"><option value="1">1 night</option><option value="2">2 nights</option><option value="3">3 nights</option><option value="4">4 nights</option><option value="5">5 nights</option><option value="6">6 nights</option><option value="7" selected>7 nights</option></select><p class="note">Used when you choose “per night.”</p></div>
+  <div><label class="label" for="otherIncome">Other reward income per month ($)</label><input id="otherIncome" type="number" min="0" max="1000000" step="0.01" value="0" inputmode="decimal"></div>
+ </div>
+ <div class="row">
+  <div><label class="label" for="withdrawal">How often do you cash out?</label><select id="withdrawal"><option value="weekly">Weekly</option><option value="monthly" selected>Monthly</option><option value="flexible">Whenever I can</option></select></div>
+  <div><label class="label" for="payoutDelay">Payout delay</label><select id="payoutDelay"><option value="0">No delay / already withdrawn</option><option value="3">About 3 days</option><option value="7" selected>About 1 week</option><option value="14">About 2 weeks</option><option value="30">About 1 month</option></select></div>
+ </div>
+ <p class="note">Cash-out frequency changes the payout schedule estimate, not how much you earn. Actual app minimums, fees, and payout delays may differ.</p>
+</section>
+
+<section class="card">
+ <h2>2. Choose your money split</h2>
+ <label class="label" for="investPct">Percent to invest: <strong id="pctLabel">50%</strong></label>
+ <input id="investPct" type="range" min="0" max="100" step="5" value="50">
+ <div class="tagline small"><span>Keep more cash</span><span>Invest more</span></div>
+ <div class="bar"><span class="invested" id="investBar" style="width:50%"></span><span class="kept" id="keepBar" style="width:50%"></span></div>
+ <div class="stats">
+  <div class="stat"><span class="small">Estimated invest / month</span><strong id="investMonth">$112.50</strong></div>
+  <div class="stat"><span class="small">Estimated keep / month</span><strong id="keepMonth">$112.50</strong></div>
+ </div>
+ <label class="choice"><input id="emergency" type="checkbox" checked><span><b>Build cash savings first</b><br><span class="small">Prioritize a small emergency cushion before investing money you might need soon.</span></span></label>
+ <div class="row">
+  <div><label class="label" for="cashSaved">Cash savings already set aside ($)</label><input id="cashSaved" type="number" min="0" max="100000000" step="1" value="0" inputmode="decimal"></div>
+  <div><label class="label" for="cashTarget">My cash cushion goal ($)</label><input id="cashTarget" type="number" min="0" max="100000000" step="50" value="500" inputmode="decimal"></div>
+ </div>
+</section>
+
+<section class="card">
+ <h2>3. What is the money for?</h2>
+ <label class="label" for="timeline">When might you need the invested money?</label>
+ <select id="timeline">
+  <option value="soon">Within 1 year</option>
+  <option value="middle">In 1–5 years</option>
+  <option value="long" selected>In 5+ years</option>
+ </select>
+ <label class="label" for="risk">How would you feel if the investment dropped 20%?</label>
+ <select id="risk">
+  <option value="low">I really can't afford that loss</option>
+  <option value="medium" selected>I wouldn't like it, but could wait</option>
+  <option value="high">I can handle big ups and downs</option>
+ </select>
+ <label class="label" for="debt">Do you have high-interest debt (like credit cards)?</label>
+ <select id="debt"><option value="yes">Yes</option><option value="no" selected>No</option><option value="unsure">Not sure</option></select>
+ <label class="label" for="account">Which kind of account are you considering?</label>
+ <select id="account">
+  <option value="unsure" selected>Help me choose</option>
+  <option value="savings">Savings account</option>
+  <option value="brokerage">Regular investing / brokerage account</option>
+  <option value="retirement">Retirement account (long-term)</option>
+ </select>
+ <button class="button" id="buildPlan">Build / update my plan</button>
+</section>
+
+<section class="card" id="dashboard" aria-live="polite">
+ <div class="eyebrow">Your results</div>
+ <h2>4. Your earnings forecast</h2>
+ <div class="small">Average estimate per 30-day month</div><div class="big" id="monthlyTotal">$225.00</div>
+ <div class="stats">
+  <div class="stat"><span class="small">Weekly average</span><strong id="weeklyTotal">$52.50</strong></div>
+  <div class="stat"><span class="small">Yearly estimate</span><strong id="yearlyTotal">$2,737.50</strong></div>
+  <div class="stat"><span class="small">Cash-out amount (estimate)</span><strong id="payoutAmount">$225.00</strong></div>
+  <div class="stat"><span class="small">First payout timing</span><strong id="payoutTiming">About 1 week</strong></div>
+ </div>
+ <div class="divider"></div>
+ <h3>Suggested next move</h3>
+ <div class="result" id="recommendation"><b>Build your cushion, then invest for the long term.</b><p>Keep money you need soon in accessible savings. Only invest money you can leave alone.</p></div>
+ <div class="result warning" id="cashRecommendation"><b>Cash cushion</b><p>With the current settings, you'll see your estimated savings plan here.</p></div>
+ <h3>Possible long-term growth (illustration only)</h3>
+ <p class="note">This assumes you invest the same estimated amount monthly. It is not a forecast or promise. Real returns vary, can be negative, and fees/taxes are not included.</p>
+ <div class="three">
+  <div class="stat"><span class="small">After 1 year</span><strong id="growth1">$0</strong></div>
+  <div class="stat"><span class="small">After 5 years</span><strong id="growth5">$0</strong></div>
+  <div class="stat"><span class="small">After 10 years</span><strong id="growth10">$0</strong></div>
+ </div>
+ <label class="label" for="returnRate">Illustration annual return: <strong id="returnLabel">5%</strong></label>
+ <input id="returnRate" type="range" min="0" max="10" step="1" value="5">
+ <div class="tagline small"><span>0% growth</span><span>10% growth</span></div>
+ <button class="button secondary" id="reset">Reset to example values</button>
+</section>
+<section class="card">
+ <h2>5. Investment basics</h2>
+ <ul>
+  <li><b>Need it within a year?</b> Consider accessible savings at an FDIC-insured bank rather than stocks, because markets can drop right before you need the money.</li>
+  <li><b>Need it in 1–5 years?</b> Be cautious with stock-market risk. Keep essential goal money in lower-risk options appropriate to your timeframe.</li>
+  <li><b>5+ year goal?</b> If your emergency savings and expensive debt are handled, learn about diversified, low-cost index funds through a reputable regulated brokerage.</li>
+  <li><b>Retirement money?</b> Retirement accounts can have tax benefits but rules and withdrawal restrictions apply; don't choose one for money you'll need soon.</li>
+  <li><b>Avoid “quick money” promises:</b> don't use essential cash for meme coins, leverage, or anything promising guaranteed returns.</li>
+ </ul>
+ <p class="note">General education only, not personalized financial, tax, or investment advice. This app does not connect to your accounts or make trades.</p>
+</section>
+<footer class="footer">Privacy: your settings are stored in this browser on this device only. If you host this page publicly, the app code and its URL are public; the saved settings are not uploaded by this page. Avoid entering account numbers, passwords, or sensitive financial details.</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const money=n=>Number.isFinite(n)?n.toLocaleString('en-US',{style:'currency',currency:'USD'}):'$0.00';
+const num=id=>Math.max(0,Number($(id).value)||0);
+function monthlyEarnings(){
+ const base=num('nightly'), freq=$('frequency').value, days=Number($('activeDays').value)||0, other=num('otherIncome');
+ let main=0;
+ if(freq==='night') main=base*days*30/7;
+ if(freq==='week') main=base*30/7;
+ if(freq==='month') main=base;
+ return main+other;
+}
+function futureValue(monthly,annualRate,months){
+ const r=annualRate/100/12;
+ if(months<=0)return 0;
+ if(r===0)return monthly*months;
+ return monthly*((Math.pow(1+r,months)-1)/r);
+}
+function render(){
+ const monthly=Math.min(100000000,monthlyEarnings()), weekly=monthly*7/30, yearly=monthly*12;
+ const pct=Number($('investPct').value)||0, invest=monthly*pct/100, keep=monthly-invest;
+ $('pctLabel').textContent=pct+'%';
+ $('investBar').style.width=pct+'%';$('keepBar').style.width=(100-pct)+'%';
+ $('investMonth').textContent=money(invest);$('keepMonth').textContent=money(keep);
+ $('monthlyTotal').textContent=money(monthly);$('weeklyTotal').textContent=money(weekly);$('yearlyTotal').textContent=money(yearly);
+ const cashOut=$('withdrawal').value;
+ let payout=monthly, label='Monthly estimate';
+ if(cashOut==='weekly'){payout=weekly;label='Weekly estimate';}
+ if(cashOut==='flexible'){payout=monthly;label='Flexible / varies';}
+ $('payoutAmount').textContent=money(payout);
+ const delay=Number($('payoutDelay').value)||0;
+ $('payoutTiming').textContent=delay===0?'Already available':('About '+delay+' day'+(delay===1?'':'s'));
+ const timeline=$('timeline').value,risk=$('risk').value,debt=$('debt').value,account=$('account').value,emergency=$('emergency').checked;
+ let title='',body='';
+ if(debt==='yes'){
+  title='Check high-interest debt before investing';
+  body='If you have high-interest credit-card debt, paying it down often deserves priority over investing. Keep some cash for unexpected needs, and check the debt interest rate.';
+ }else if(timeline==='soon'){
+  title='Prioritize safe, accessible cash';
+  body='Because you may need this money within a year, consider an accessible savings account at an FDIC-insured bank. Stock-market investments can fall when you need to withdraw.';
+ }else if(timeline==='middle'){
+  title='Be cautious with a 1–5 year goal';
+  body='Keep money you cannot afford to lose in lower-risk options that fit the goal date. Only invest a portion in market investments if you can accept a loss or delay the goal.';
+ }else if(risk==='low'){
+  title='Choose a cautious approach';
+  body='A long timeline can help, but stocks still drop. Build a cash cushion and learn about diversified options before taking market risk.';
+ }else{
+  title='Learn about diversified long-term investing';
+  body='For money you can leave alone for 5+ years, learn about a diversified, low-cost index fund through a reputable brokerage. It can lose value, including for extended periods.';
+ }
+ if(account==='savings'){title='Savings account focus';body='Compare fees, access rules, and rates at FDIC-insured banks. Savings is generally better suited to short-term money than stock-market investing.';}
+ if(account==='retirement'){
+  if(timeline!=='long'){title='Check retirement withdrawal rules';body='Retirement accounts are generally meant for long-term retirement saving. Taxes, penalties, eligibility, and withdrawal restrictions may apply, so avoid using them for money you need soon.';}
+  else {title='Explore retirement account rules';body='If you have eligible earned income, a retirement account may be worth learning about. Compare fees and tax rules and remember that investments can lose value.';}
+ }
+ if(account==='brokerage' && timeline==='soon'){title='A brokerage is not automatically safe';body='A regular brokerage can hold investments that lose value. For money needed within a year, accessible savings is generally more appropriate than stocks.';}
+ if(debt==='unsure')body+=' If you are unsure about debt, check balances and interest rates before deciding.';
+ if(emergency){
+  const saved=num('cashSaved'),target=num('cashTarget'),gap=Math.max(0,target-saved);
+  const monthlyCash=keep;
+  let cashText=gap===0?'Your stated cash cushion goal is already met.':monthlyCash>0?'You are about '+money(gap/monthlyCash)+' months from your cushion goal if all of the “keep” amount goes to savings.':'At the current split, none of the monthly estimate is being kept for your cushion; raise the keep amount to build it.';
+  if(gap>0 && monthlyCash>0)cashText='You still need '+money(gap)+' to reach your cushion goal. At '+money(monthlyCash)+' kept per month, that takes about '+(gap/monthlyCash).toFixed(1)+' months.';
+  $('cashRecommendation').innerHTML='<b>Cash cushion progress</b><p>'+cashText+'</p>';
+  if(gap>0 && invest>0){body+=' Since the cash-cushion option is on and the goal is not yet met, consider directing some of the planned investment amount to savings until you reach that goal.';}
+ }else{
+  $('cashRecommendation').innerHTML='<b>Cash cushion</b><p>You turned off the cash-cushion reminder. Consider keeping emergency money accessible before investing.</p>';
+ }
+ $('recommendation').innerHTML='<b>'+title+'</b><p>'+body+'</p>';
+ const rate=Number($('returnRate').value)||0;
+ $('returnLabel').textContent=rate+'%';
+ $('growth1').textContent=money(futureValue(invest,rate,12));
+ $('growth5').textContent=money(futureValue(invest,rate,60));
+ $('growth10').textContent=money(futureValue(invest,rate,120));
+ const data={nightly:$('nightly').value,frequency:$('frequency').value,activeDays:$('activeDays').value,otherIncome:$('otherIncome').value,withdrawal:$('withdrawal').value,payoutDelay:$('payoutDelay').value,investPct:$('investPct').value,emergency:$('emergency').checked,cashSaved:$('cashSaved').value,cashTarget:$('cashTarget').value,timeline,risk,debt,account,returnRate:$('returnRate').value};
+ try{localStorage.setItem('rewardMoneyPlannerV2',JSON.stringify(data));}catch(e){}
+}
+function reset(){
+ const defaults={nightly:'7.50',frequency:'night',activeDays:'7',otherIncome:'0',withdrawal:'monthly',payoutDelay:'7',investPct:'50',cashSaved:'0',cashTarget:'500',timeline:'long',risk:'medium',debt:'no',account:'unsure',returnRate:'5'};
+ Object.entries(defaults).forEach(([k,v])=>{if($(k))$(k).value=v;});
+ $('emergency').checked=true;render();
+}
+try{
+ const d=JSON.parse(localStorage.getItem('rewardMoneyPlannerV2')||'null');
+ if(d){Object.entries(d).forEach(([k,v])=>{if(k==='emergency')$('emergency').checked=!!v;else if($(k))$(k).value=v;});}
+}catch(e){}
+['nightly','frequency','activeDays','otherIncome','withdrawal','payoutDelay','investPct','emergency','cashSaved','cashTarget','timeline','risk','debt','account','returnRate'].forEach(id=>{
+ $(id).addEventListener('input',render);$(id).addEventListener('change',render);
+});
+$('buildPlan').addEventListener('click',()=>{render();$('dashboard').scrollIntoView({behavior:'smooth',block:'start'});});
+$('reset').addEventListener('click',reset);
+render();
+</script>
+</body>
+</html>
